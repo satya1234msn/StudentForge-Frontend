@@ -1,0 +1,119 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@300;400;500;600;700&display=swap');
+
+@import "tailwindcss";
+
+:root {
+  font-family: 'Space Grotesk', sans-serif;
+  color-scheme: dark;
+}
+
+code, pre, .font-mono, .badge-mono {
+  font-family: 'JetBrains Mono', monospace;
+}
+
+body {
+  margin: 0;
+  background-color: #060913;
+  /* Cyber digital matrix grid overlay */
+  background-image: 
+    linear-gradient(rgba(16, 185, 129, 0.015) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(16, 185, 129, 0.015) 1px, transparent 1px),
+    radial-gradient(at 0% 0%, rgba(16, 185, 129, 0.05) 0px, transparent 50%),
+    radial-gradient(at 100% 100%, rgba(6, 182, 212, 0.05) 0px, transparent 50%);
+  background-size: 24px 24px, 24px 24px, 100% 100%, 100% 100%;
+  background-attachment: fixed;
+  color: #e2e8f0;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* Premium developer glass panels */
+.glass-panel {
+  background: rgba(8, 12, 24, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(16, 185, 129, 0.12);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.4);
+}
+
+.glass-panel-hover {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.glass-panel-hover:hover {
+  background: rgba(8, 12, 24, 0.95);
+  border-color: rgba(6, 182, 212, 0.4);
+  box-shadow: 0 10px 30px -10px rgba(6, 182, 212, 0.2);
+  transform: translateY(-2px);
+}
+
+/* Code-themed inputs */
+.glass-input {
+  font-family: 'JetBrains Mono', monospace;
+  background: rgba(3, 7, 18, 0.8);
+  border: 1px solid rgba(16, 185, 129, 0.2);
+  color: #10b981;
+  transition: all 0.25s ease-in-out;
+}
+
+.glass-input:focus {
+  outline: none;
+  background: rgba(3, 7, 18, 0.95);
+  border-color: #06b6d4;
+  color: #06b6d4;
+  box-shadow: 0 0 10px rgba(6, 182, 212, 0.15);
+}
+
+/* Tech gradient text */
+.text-gradient-purple-blue {
+  background: linear-gradient(135deg, #10b981 0%, #06b6d4 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Monospace command badges */
+.badge-tech {
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 500;
+  text-transform: uppercase;
+}
+
+/* Cybernetic Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #030712;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(16, 185, 129, 0.3);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #06b6d4;
+}
+
+/* Scanline / matrix terminal effects */
+.scanline {
+  position: relative;
+}
+
+.scanline::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    rgba(18, 16, 16, 0) 50%, 
+    rgba(0, 0, 0, 0.25) 50%
+  );
+  background-size: 100% 4px;
+  pointer-events: none;
+  z-index: 10;
+}
