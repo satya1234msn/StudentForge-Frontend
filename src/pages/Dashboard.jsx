@@ -196,7 +196,7 @@ const Dashboard = () => {
                           )}
                         </div>
 
-                        <Link to={`/discover`} className="text-xs font-bold text-indigo-400 hover:text-indigo-300 transition-colors">
+                        <Link to={`/projects/${proj.id}`} className="text-xs font-bold text-emerald-400 hover:text-cyan-400 transition-colors">
                           View details →
                         </Link>
                       </div>

@@ -9,6 +9,7 @@ import ProfileSetup from './pages/ProfileSetup';
 import Dashboard from './pages/Dashboard';
 import CreateProject from './pages/CreateProject';
 import Discover from './pages/Discover';
+import ProjectDetail from './pages/ProjectDetail';
 
 // Route Guard for authenticated actions
 const ProtectedRoute = ({ children }) => {
@@ -105,6 +106,14 @@ function App() {
               element={
                 <ProtectedRoute>
                   <Discover />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/projects/:id"
+              element={
+                <ProtectedRoute>
+                  <ProjectDetail />
                 </ProtectedRoute>
               }
             />
