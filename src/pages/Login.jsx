@@ -63,6 +63,7 @@ const Login = () => {
                 placeholder="you@college.edu"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
+                autocomplete="username"
                 className="glass-input w-full pl-11 pr-4 py-3 rounded-xl text-sm"
               />
             </div>
@@ -84,6 +85,7 @@ const Login = () => {
                 placeholder="••••••••"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
+                autocomplete="current-password"
                 className="glass-input w-full pl-11 pr-11 py-3 rounded-xl text-sm"
               />
               <button
