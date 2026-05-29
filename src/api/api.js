@@ -2,7 +2,7 @@ import axios from 'axios';
 
 // Create standard Axios instance pointing to the Express server
 const api = axios.create({
-  baseURL: 'http://localhost:5000/api',
+  baseURL: 'https://studentforge-backend-production.up.railway.app/api',
   headers: {
     'Content-Type': 'application/json'
   }
@@ -31,7 +31,7 @@ api.interceptors.response.use(
         const refreshToken = localStorage.getItem('refreshToken');
         if (refreshToken) {
           // Request new access token using stored refresh token
-          const res = await axios.post('http://localhost:5000/api/auth/refresh', {
+          const res = await axios.post('https://studentforge-backend-production.up.railway.app/api/auth/refresh', {
             refreshToken
           });
           const { accessToken } = res.data;

@@ -2,9 +2,41 @@
 
 @import "tailwindcss";
 
+@theme {
+  --color-slate-50: #000000;
+  --color-slate-100: #09090b;
+  --color-slate-200: #18181b;
+  --color-slate-300: #27272a;
+  --color-slate-400: #52525b;
+  --color-slate-500: #71717a;
+  --color-slate-600: #a1a1aa;
+  --color-slate-700: #d4d4d8;
+  --color-slate-800: #e4e4e7;
+  --color-slate-850: #f4f4f5;
+  --color-slate-900: #fcfcfc;
+  --color-slate-950: #ffffff;
+
+  --color-indigo-500: #18181b;
+  --color-indigo-600: #18181b;
+  --color-purple-450: #18181b;
+  --color-purple-400: #18181b;
+  --color-purple-500: #18181b;
+  --color-teal-400: #18181b;
+  --color-teal-500: #18181b;
+  --color-cyan-400: #18181b;
+  --color-cyan-500: #18181b;
+  --color-emerald-400: #18181b;
+  --color-emerald-450: #18181b;
+  --color-emerald-500: #18181b;
+  --color-rose-450: #ef4444;
+  --color-rose-500: #dc2626;
+  --color-orange-400: #18181b;
+  --color-orange-500: #18181b;
+}
+
 :root {
   font-family: 'Space Grotesk', sans-serif;
-  color-scheme: dark;
+  color-scheme: light;
 }
 
 code, pre, .font-mono, .badge-mono {
@@ -13,27 +45,22 @@ code, pre, .font-mono, .badge-mono {
 
 body {
   margin: 0;
-  background-color: #050811;
-  /* Cyber coding matrix grid lines */
+  background-color: #ffffff;
+  /* Ultra subtle light gray gradient mesh */
   background-image: 
-    linear-gradient(rgba(16, 185, 129, 0.02) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(16, 185, 129, 0.02) 1px, transparent 1px),
-    radial-gradient(at 0% 0%, rgba(16, 185, 129, 0.08) 0px, transparent 50%),
-    radial-gradient(at 100% 100%, rgba(6, 182, 212, 0.08) 0px, transparent 50%);
-  background-size: 30px 30px, 30px 30px, 100% 100%, 100% 100%;
+    radial-gradient(at 0% 0%, rgba(24, 24, 27, 0.015) 0px, transparent 50%),
+    radial-gradient(at 100% 100%, rgba(24, 24, 27, 0.015) 0px, transparent 50%);
   background-attachment: fixed;
-  color: #e2e8f0;
+  color: #18181b;
   min-height: 100vh;
   overflow-x: hidden;
 }
 
-/* Premium developer glass panels with neon shadows */
+/* Premium clean minimalist cards */
 .glass-panel {
-  background: rgba(7, 10, 20, 0.9);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(16, 185, 129, 0.15);
-  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
+  background: #ffffff;
+  border: 1px solid #e4e4e7;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05), 0 1px 2px -1px rgba(0, 0, 0, 0.05);
   transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
@@ -42,60 +69,85 @@ body {
 }
 
 .glass-panel-hover:hover {
-  background: rgba(7, 10, 20, 0.98);
-  border-color: rgba(6, 182, 212, 0.5);
-  box-shadow: 0 20px 40px -15px rgba(6, 182, 212, 0.3);
-  transform: translateY(-4px);
+  background: #fbfbfb;
+  border-color: #d4d4d8;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+  transform: translateY(-2px);
 }
 
-/* Monospace inputs */
+/* Minimalist clean inputs */
 .glass-input {
-  font-family: 'JetBrains Mono', monospace;
-  background: rgba(2, 4, 10, 0.9);
-  border: 1px solid rgba(16, 185, 129, 0.25);
-  color: #10b981;
+  background: #fcfcfc;
+  border: 1px solid #e4e4e7;
+  color: #18181b;
   transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .glass-input:focus {
   outline: none;
-  background: rgba(2, 4, 10, 0.98);
-  border-color: #06b6d4;
-  color: #06b6d4;
-  box-shadow: 0 0 15px rgba(6, 182, 212, 0.25);
+  background: #ffffff;
+  border-color: #000000;
+  color: #000000;
+  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.05);
 }
 
-/* HSL Glowing Gradient text */
+/* Bold solid black branding instead of neon gradients */
 .text-gradient-purple-blue {
-  background: linear-gradient(135deg, #10b981 0%, #06b6d4 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  animation: glow-pulse 4s ease-in-out infinite alternate;
+  background: none;
+  -webkit-background-clip: unset;
+  background-clip: unset;
+  -webkit-text-fill-color: unset;
+  color: #000000;
+  font-weight: 700;
 }
 
-/* Custom premium scrollbar */
+/* Redefine scrollbars for a clean white interface */
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #02040a;
+  background: #f4f4f5;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(16, 185, 129, 0.4);
+  background: #d4d4d8;
   border-radius: 3px;
   transition: all 0.3s;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #06b6d4;
+  background: #a1a1aa;
 }
 
-/* --- ADVANCED TECH ANIMATIONS --- */
+/* Safety selector: turn general layout .text-white elements to dark charcoal */
+.text-white {
+  color: #09090b !important;
+}
 
-/* Vertical card sliding entrance */
+/* BUT if it is a button with text-white, or inside such button, or inside a dark background, keep it white! */
+button.text-white,
+button.text-white *,
+.text-white.bg-black,
+.text-white.bg-red-650,
+.bg-black,
+.bg-black *,
+.bg-red-650,
+.bg-red-650 *,
+.bg-indigo-600,
+.bg-indigo-600 *,
+.bg-purple-600,
+.bg-purple-600 *,
+.bg-rose-600,
+.bg-rose-600 *,
+.bg-emerald-600,
+.bg-emerald-600 * {
+  color: #ffffff !important;
+}
+
+/* --- LIGHT INTERFACE ANIMATIONS --- */
+
 @keyframes slide-up {
   from {
     opacity: 0;
@@ -111,17 +163,6 @@ body {
   animation: slide-up 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
-/* Glowing text pulse keyframes */
-@keyframes glow-pulse {
-  from {
-    filter: drop-shadow(0 0 1px rgba(16, 185, 129, 0.1));
-  }
-  to {
-    filter: drop-shadow(0 0 6px rgba(6, 182, 212, 0.4));
-  }
-}
-
-/* Shaking animation for validation alerts */
 @keyframes shake {
   0%, 100% { transform: translateX(0); }
   20%, 60% { transform: translateX(-4px); }
@@ -132,7 +173,6 @@ body {
   animation: shake 0.4s ease-in-out;
 }
 
-/* Monospace command logs typewriter effect */
 @keyframes blink {
   50% { opacity: 0; }
 }
@@ -141,7 +181,6 @@ body {
   animation: blink 1s step-end infinite;
 }
 
-/* Apply cascading delays to Kanban cards */
 .kanban-card-delay-1 { animation-delay: 0.1s; }
 .kanban-card-delay-2 { animation-delay: 0.18s; }
 .kanban-card-delay-3 { animation-delay: 0.25s; }
