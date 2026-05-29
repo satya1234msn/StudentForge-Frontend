@@ -81,14 +81,24 @@ const Dashboard = () => {
 
   const pendingApps = applications.filter((app) => app.status === 'pending');
   const rejectedApps = applications.filter((app) => app.status === 'rejected');
-  const activeMemberProjects = applications.filter((app) => app.status === 'active');
-  const ownedProjects = myProjects.filter((p) => p.ownerId === user?.id);
+  const activeMemberApplications = applications.filter((app) => app.status === 'active');
 
-  // Unified list of active and shipped projects (owned or accepted)
-  const activeProjects = [
-    ...ownedProjects.map((p) => ({ ...p, isOwner: true })),
-    ...activeMemberProjects.map((app) => ({ ...app.project, isOwner: false, joinedRole: app.role }))
-  ];
+  const activeProjectsMap = {};
+  myProjects.forEach((p) => {
+    activeProjectsMap[p.id] = {
+      ...p,
+      joinedRole: p.members?.find((m) => m.userId === user?.id)?.role || (p.ownerId === user?.id ? 'Project Owner' : 'Member')
+    };
+  });
+  activeMemberApplications.forEach((app) => {
+    if (app.project) {
+      activeProjectsMap[app.project.id] = {
+        ...app.project,
+        joinedRole: app.role
+      };
+    }
+  });
+  const activeProjects = Object.values(activeProjectsMap);
 
   return (
     <div className="max-w-7xl mx-auto px-6 py-12 space-y-10">
@@ -187,7 +197,7 @@ const Dashboard = () => {
             ) : (
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 {activeProjects.map((proj) => {
-                  const isOwner = proj.isOwner;
+                  const isOwner = proj.ownerId === user?.id;
                   const activeApplicants = applicants[proj.id] || [];
 
                   return (
@@ -297,7 +307,7 @@ const Dashboard = () => {
               <h2 className="text-xl font-extrabold text-slate-200">Incoming Role Applications</h2>
               <div className="space-y-4">
                 {Object.entries(applicants).map(([projId, apps]) => {
-                  const proj = myProjects.find((p) => p.id === projId);
+                  const proj = activeProjects.find((p) => p.id === projId);
                   if (!proj || apps.length === 0) return null;
 
                   return (
