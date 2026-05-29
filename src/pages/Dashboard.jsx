@@ -9,6 +9,7 @@ import Badge from '../components/common/Badge';
 const Dashboard = () => {
   const { user } = useAuthStore();
   const [myProjects, setMyProjects] = useState([]);
+  const [applications, setApplications] = useState([]);
   const [notifications, setNotifications] = useState([]);
   const [applicants, setApplicants] = useState({}); // { projectId: [applicants] }
   const [isLoadingProjects, setIsLoadingProjects] = useState(true);
@@ -24,6 +25,10 @@ const Dashboard = () => {
         (p) => p.ownerId === user.id || p.members.some((m) => m.userId === user.id)
       );
       setMyProjects(userProjects);
+
+      // Fetch applications made by this user
+      const appsRes = await api.get('/projects/my-applications').catch(() => ({ data: [] }));
+      setApplications(appsRes.data);
 
       // Fetch notifications
       const notifRes = await api.get('/notifications').catch(() => ({ data: [] }));
@@ -61,13 +66,29 @@ const Dashboard = () => {
   };
 
   const handleReject = async (projectId, userId) => {
+    const reason = prompt("Enter a brief reason why you are rejecting this applicant:");
+    if (reason === null) return; // user cancelled!
+
     try {
-      await api.post(`/projects/${projectId}/reject/${userId}`);
+      await api.post(`/projects/${projectId}/reject/${userId}`, {
+        reason: reason || 'Not selected for this role.'
+      });
       fetchDashboardData();
     } catch (err) {
       alert(err.response?.data?.error || 'Failed to reject applicant.');
     }
   };
+
+  const pendingApps = applications.filter((app) => app.status === 'pending');
+  const rejectedApps = applications.filter((app) => app.status === 'rejected');
+  const activeMemberProjects = applications.filter((app) => app.status === 'active');
+  const ownedProjects = myProjects.filter((p) => p.ownerId === user?.id);
+
+  // Unified list of active and shipped projects (owned or accepted)
+  const activeProjects = [
+    ...ownedProjects.map((p) => ({ ...p, isOwner: true })),
+    ...activeMemberProjects.map((app) => ({ ...app.project, isOwner: false, joinedRole: app.role }))
+  ];
 
   return (
     <div className="max-w-7xl mx-auto px-6 py-12 space-y-10">
@@ -154,7 +175,7 @@ const Dashboard = () => {
               <div className="glass-panel p-10 rounded-2xl text-center text-slate-450 text-sm">
                 Loading projects...
               </div>
-            ) : myProjects.length === 0 ? (
+            ) : activeProjects.length === 0 ? (
               <div className="glass-panel p-10 rounded-2xl text-center space-y-4">
                 <p className="text-slate-400 text-sm">You haven't created or joined any projects yet.</p>
                 <Link to="/discover" className="inline-block">
@@ -165,8 +186,8 @@ const Dashboard = () => {
               </div>
             ) : (
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                {myProjects.map((proj) => {
-                  const isOwner = proj.ownerId === user.id;
+                {activeProjects.map((proj) => {
+                  const isOwner = proj.isOwner;
                   const activeApplicants = applicants[proj.id] || [];
 
                   return (
@@ -175,7 +196,7 @@ const Dashboard = () => {
                         <div className="flex justify-between items-start gap-2">
                           <h3 className="text-lg font-bold text-white tracking-wide truncate">{proj.title}</h3>
                           <Badge variant={isOwner ? 'indigo' : 'purple'} className="shrink-0 text-[10px]">
-                            {isOwner ? 'Owner' : 'Member'}
+                            {isOwner ? 'Owner' : proj.joinedRole || 'Member'}
                           </Badge>
                         </div>
                         <p className="text-xs text-slate-400 mt-2 line-clamp-3 leading-relaxed">
@@ -203,6 +224,69 @@ const Dashboard = () => {
                     </div>
                   );
                 })}
+              </div>
+            )}
+          </div>
+
+          {/* Pending Applications Section */}
+          <div className="space-y-4 pt-4">
+            <h2 className="text-xl font-extrabold text-slate-200">Applied Projects (Pending Approval)</h2>
+            {pendingApps.length === 0 ? (
+              <div className="glass-panel p-6 rounded-2xl text-center text-slate-450 text-xs">
+                No pending applications. All caught up!
+              </div>
+            ) : (
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                {pendingApps.map((app) => (
+                  <div key={app.id} className="glass-panel p-6 rounded-2xl flex flex-col justify-between h-[160px] border-l-2 border-slate-400">
+                    <div>
+                      <div className="flex justify-between items-start gap-2">
+                        <h3 className="text-sm font-bold text-white tracking-wide truncate">{app.project?.title}</h3>
+                        <Badge variant="indigo" className="text-[8px] py-0">{app.role}</Badge>
+                      </div>
+                      <p className="text-[11px] text-slate-400 mt-2 line-clamp-2 leading-relaxed">
+                        {app.project?.description}
+                      </p>
+                    </div>
+                    <div className="mt-4 pt-3 border-t border-slate-850/60 flex items-center justify-between text-[10px] text-slate-400 font-medium">
+                      <span>Owner: {app.project?.owner?.name}</span>
+                      <span className="text-amber-500 font-bold uppercase">Pending Review</span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+
+          {/* Rejected Applications Section */}
+          <div className="space-y-4 pt-4">
+            <h2 className="text-xl font-extrabold text-slate-200">Rejected Applications</h2>
+            {rejectedApps.length === 0 ? (
+              <div className="glass-panel p-6 rounded-2xl text-center text-slate-450 text-xs">
+                No rejected applications. All clear!
+              </div>
+            ) : (
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                {rejectedApps.map((app) => (
+                  <div key={app.id} className="glass-panel p-6 rounded-2xl flex flex-col justify-between h-[180px] border-l-2 border-rose-500">
+                    <div>
+                      <div className="flex justify-between items-start gap-2">
+                        <h3 className="text-sm font-bold text-white tracking-wide truncate">{app.project?.title}</h3>
+                        <Badge variant="rose" className="text-[8px] py-0">{app.role}</Badge>
+                      </div>
+                      <p className="text-[11px] text-slate-400 mt-2 line-clamp-2 leading-relaxed">
+                        {app.project?.description}
+                      </p>
+                      <p className="text-[10px] text-rose-500 mt-2 leading-relaxed italic font-bold tracking-wide normal-case first-letter:uppercase">
+                        Feedback: "{app.contributionSummary || 'Not selected.'}"
+                      </p>
+                    </div>
+                    <div className="mt-3 pt-3 border-t border-slate-850/60 flex items-center justify-between text-[10px] text-slate-400 font-medium">
+                      <span>Owner: {app.project?.owner?.name}</span>
+                      <span className="text-rose-500 font-bold uppercase">Rejected</span>
+                    </div>
+                  </div>
+                ))}
               </div>
             )}
           </div>

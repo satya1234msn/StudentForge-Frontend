@@ -233,6 +233,21 @@ const Discover = () => {
                     const isApplyingThis = applyingRole === r.roleTitle;
                     const isOwnProject = selectedProject.ownerId === user?.id;
 
+                    // Application and Skills constraint evaluations
+                    const userApplication = selectedProject.members?.find(m => m.userId === user?.id);
+                    const hasApplied = !!userApplication;
+                    const isAppliedThisRole = userApplication && userApplication.role.toLowerCase() === r.roleTitle.toLowerCase();
+                    
+                    const requiredSkills = r.skillsRequired?.map(s => s.toLowerCase()) || [];
+                    const hasMatchingProfileSkill = user?.skills?.some(s => 
+                      requiredSkills.includes(s.skillName.toLowerCase())
+                    );
+                    const userBioLower = (user?.bio || '').toLowerCase();
+                    const hasMatchingBioSkill = requiredSkills.some(s => 
+                      userBioLower.includes(s)
+                    );
+                    const skillsMatch = requiredSkills.length === 0 || hasMatchingProfileSkill || hasMatchingBioSkill;
+
                     return (
                       <div key={r.id} className="bg-slate-950/25 border border-slate-850 p-4.5 rounded-xl flex flex-col justify-between gap-4">
                         <div className="flex justify-between items-start">
@@ -249,13 +264,44 @@ const Discover = () => {
                           </div>
 
                           {!r.filled && !isOwnProject && user && !isApplyingThis && (
-                            <Button
-                              onClick={() => setApplyingRole(r.roleTitle)}
-                              variant="primary"
-                              className="text-[10px] py-1.5 px-3 uppercase shrink-0"
-                            >
-                              Apply
-                            </Button>
+                            <div className="flex flex-col items-end gap-1.5 shrink-0">
+                              {hasApplied ? (
+                                userApplication.status === 'pending' ? (
+                                  isAppliedThisRole ? (
+                                    <Button disabled variant="secondary" className="text-[10px] py-1.5 px-3 uppercase opacity-60">
+                                      Applied
+                                    </Button>
+                                  ) : (
+                                    <span className="text-[9px] text-slate-500 font-bold uppercase tracking-wider">Applied (Other Role)</span>
+                                  )
+                                ) : userApplication.status === 'active' ? (
+                                  <span className="text-[9px] text-emerald-600 font-bold uppercase tracking-wider">Joined Team</span>
+                                ) : (
+                                  // Soft-rejected previously: allow re-application if skills align
+                                  <Button
+                                    onClick={() => setApplyingRole(r.roleTitle)}
+                                    disabled={!skillsMatch}
+                                    variant="primary"
+                                    className="text-[10px] py-1.5 px-3 uppercase shrink-0 disabled:opacity-40"
+                                  >
+                                    Re-Apply
+                                  </Button>
+                                )
+                              ) : (
+                                <Button
+                                  onClick={() => setApplyingRole(r.roleTitle)}
+                                  disabled={!skillsMatch}
+                                  variant="primary"
+                                  className="text-[10px] py-1.5 px-3 uppercase shrink-0 disabled:opacity-40 disabled:cursor-not-allowed"
+                                  title={!skillsMatch ? "Skills mismatch with your profile/bio" : ""}
+                                >
+                                  Apply
+                                </Button>
+                              )}
+                              {!skillsMatch && (!hasApplied || userApplication.status === 'rejected') && (
+                                <span className="text-[8px] text-rose-500 font-bold uppercase tracking-wider">Skills Mismatch</span>
+                              )}
+                            </div>
                           )}
                         </div>
 
