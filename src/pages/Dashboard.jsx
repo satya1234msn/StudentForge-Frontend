@@ -79,6 +79,24 @@ const Dashboard = () => {
     }
   };
 
+  const handleClearNotification = async (id) => {
+    try {
+      await api.delete(`/notifications/${id}`);
+      setNotifications((prev) => prev.filter((n) => n.id !== id));
+    } catch (err) {
+      console.error('Failed to clear notification:', err);
+    }
+  };
+
+  const handleClearAllNotifications = async () => {
+    try {
+      await api.delete('/notifications');
+      setNotifications([]);
+    } catch (err) {
+      console.error('Failed to clear all notifications:', err);
+    }
+  };
+
   const pendingApps = applications.filter((app) => app.status === 'pending');
   const rejectedApps = applications.filter((app) => app.status === 'rejected');
   const activeMemberApplications = applications.filter((app) => app.status === 'active');
@@ -401,19 +419,38 @@ const Dashboard = () => {
 
           {/* Quick Notifications Center */}
           <div className="glass-panel p-6 rounded-2xl space-y-4">
-            <h3 className="text-lg font-extrabold text-slate-200 flex items-center gap-2">
-              <Bell size={18} className="text-indigo-400 animate-pulse" />
-              Notifications Center
-            </h3>
+            <div className="flex justify-between items-center">
+              <h3 className="text-lg font-extrabold text-slate-200 flex items-center gap-2">
+                <Bell size={18} className="text-indigo-400 animate-pulse" />
+                Notifications Center
+              </h3>
+              {notifications.length > 0 && (
+                <button
+                  onClick={handleClearAllNotifications}
+                  className="text-xs font-semibold text-rose-500 hover:text-rose-450 transition-colors"
+                >
+                  Clear All
+                </button>
+              )}
+            </div>
 
             {notifications.length === 0 ? (
               <p className="text-slate-500 text-sm py-4 text-center">No new updates or tasks. All clear!</p>
             ) : (
               <div className="space-y-3.5 divide-y divide-slate-850/40">
                 {notifications.map((notif) => (
-                  <div key={notif.id} className="pt-3 first:pt-0">
-                    <p className="text-xs font-bold text-slate-200">{notif.title}</p>
-                    <p className="text-xs text-slate-400 mt-1 leading-relaxed">{notif.message}</p>
+                  <div key={notif.id} className="pt-3 first:pt-0 flex justify-between items-start gap-4 group">
+                    <div className="flex-1 min-w-0">
+                      <p className="text-xs font-bold text-slate-200">{notif.title}</p>
+                      <p className="text-xs text-slate-400 mt-1 leading-relaxed">{notif.message}</p>
+                    </div>
+                    <button
+                      onClick={() => handleClearNotification(notif.id)}
+                      className="text-slate-500 hover:text-white transition-colors p-1 rounded-md hover:bg-slate-850 shrink-0"
+                      title="Clear message"
+                    >
+                      <X size={14} />
+                    </button>
                   </div>
                 ))}
               </div>
