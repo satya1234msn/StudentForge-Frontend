@@ -323,9 +323,9 @@ const ProjectDetail = () => {
                                 </div>
 
                                 {/* Shift mutator controls */}
-                                {isAssignee && (
-                                  <div className="flex gap-1 pt-1.5">
-                                    {col === 'todo' && (
+                                {(isAssignee || (col === 'review' && isOwner)) && (
+                                  <div className="flex gap-1 pt-1.5 w-full">
+                                    {isAssignee && col === 'todo' && (
                                       <Button
                                         onClick={() => handleShiftTask(task.id, 'in_progress')}
                                         variant="secondary"
@@ -335,7 +335,7 @@ const ProjectDetail = () => {
                                         <ChevronRight size={10} />
                                       </Button>
                                     )}
-                                    {col === 'in_progress' && (
+                                    {isAssignee && col === 'in_progress' && (
                                       <Button
                                         onClick={() => handleShiftTask(task.id, 'review')}
                                         variant="secondary"

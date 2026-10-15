@@ -101,22 +101,8 @@ function App() {
                 </ProtectedRoute>
               }
             />
-            <Route
-              path="/discover"
-              element={
-                <ProtectedRoute>
-                  <Discover />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/projects/:id"
-              element={
-                <ProtectedRoute>
-                  <ProjectDetail />
-                </ProtectedRoute>
-              }
-            />
+            <Route path="/discover" element={<Discover />} />
+            <Route path="/projects/:id" element={<ProjectDetail />} />
 
             {/* Catch-all redirect */}
             <Route path="*" element={<Navigate to="/" replace />} />

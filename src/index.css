@@ -1,41 +1,8 @@
-@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@300;400;500;600;700&family=Fira+Code:wght@400;500;600&display=swap');
-
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
 @import "tailwindcss";
 
-@theme {
-  --color-slate-50: #000000;
-  --color-slate-100: #09090b;
-  --color-slate-200: #18181b;
-  --color-slate-300: #27272a;
-  --color-slate-400: #52525b;
-  --color-slate-500: #71717a;
-  --color-slate-600: #a1a1aa;
-  --color-slate-700: #d4d4d8;
-  --color-slate-800: #e4e4e7;
-  --color-slate-850: #f4f4f5;
-  --color-slate-900: #fcfcfc;
-  --color-slate-950: #ffffff;
-
-  --color-indigo-500: #18181b;
-  --color-indigo-600: #18181b;
-  --color-purple-450: #18181b;
-  --color-purple-400: #18181b;
-  --color-purple-500: #18181b;
-  --color-teal-400: #18181b;
-  --color-teal-500: #18181b;
-  --color-cyan-400: #18181b;
-  --color-cyan-500: #18181b;
-  --color-emerald-400: #18181b;
-  --color-emerald-450: #18181b;
-  --color-emerald-500: #18181b;
-  --color-rose-450: #ef4444;
-  --color-rose-500: #dc2626;
-  --color-orange-400: #18181b;
-  --color-orange-500: #18181b;
-}
-
 :root {
-  font-family: 'Space Grotesk', sans-serif;
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   color-scheme: light;
 }
 
@@ -45,144 +12,106 @@ code, pre, .font-mono, .badge-mono {
 
 body {
   margin: 0;
-  background-color: #ffffff;
-  /* Ultra subtle light gray gradient mesh */
+  background-color: #fbfbfe;
+  /* Soft, dreamy pastel ambient gradients (Jitter & Dribbble inspired) */
   background-image: 
-    radial-gradient(at 0% 0%, rgba(24, 24, 27, 0.015) 0px, transparent 50%),
-    radial-gradient(at 100% 100%, rgba(24, 24, 27, 0.015) 0px, transparent 50%);
+    radial-gradient(at 0% 0%, rgba(224, 231, 255, 0.5) 0px, transparent 50%),
+    radial-gradient(at 100% 0%, rgba(254, 243, 199, 0.4) 0px, transparent 50%),
+    radial-gradient(at 50% 50%, rgba(243, 232, 255, 0.35) 0px, transparent 50%),
+    radial-gradient(at 0% 100%, rgba(220, 252, 231, 0.4) 0px, transparent 50%),
+    radial-gradient(at 100% 100%, rgba(255, 228, 230, 0.35) 0px, transparent 50%);
   background-attachment: fixed;
-  color: #18181b;
+  color: #1e293b;
   min-height: 100vh;
   overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
 }
 
-/* Premium clean minimalist cards */
+/* Pleasant, frosted pastel cards */
 .glass-panel {
-  background: #ffffff;
-  border: 1px solid #e4e4e7;
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05), 0 1px 2px -1px rgba(0, 0, 0, 0.05);
-  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.glass-panel-hover {
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(226, 232, 240, 0.85);
+  box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.035), 0 1px 3px rgba(15, 23, 42, 0.02);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .glass-panel-hover:hover {
-  background: #fbfbfb;
-  border-color: #d4d4d8;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+  background: rgba(255, 255, 255, 0.98);
+  border-color: rgba(199, 210, 254, 0.9);
+  box-shadow: 0 12px 30px -4px rgba(99, 102, 241, 0.08), 0 4px 10px -2px rgba(15, 23, 42, 0.03);
   transform: translateY(-2px);
 }
 
-/* Minimalist clean inputs */
+/* Pleasant inputs */
 .glass-input {
-  background: #fcfcfc;
-  border: 1px solid #e4e4e7;
-  color: #18181b;
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid #e2e8f0;
+  color: #1e293b;
+  transition: all 0.2s ease;
 }
 
 .glass-input:focus {
   outline: none;
   background: #ffffff;
-  border-color: #000000;
-  color: #000000;
-  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.05);
+  border-color: #a5b4fc;
+  box-shadow: 0 0 0 3px rgba(165, 180, 252, 0.25);
 }
 
-/* Bold solid black branding instead of neon gradients */
+.glass-input::placeholder {
+  color: #94a3b8;
+}
+
+/* Soft, sophisticated brand gradient text */
 .text-gradient-purple-blue {
-  background: none;
-  -webkit-background-clip: unset;
-  background-clip: unset;
-  -webkit-text-fill-color: unset;
-  color: #000000;
-  font-weight: 700;
+  background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 50%, #2563eb 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: 800;
 }
 
-/* Redefine scrollbars for a clean white interface */
+/* Pastel theme scrollbars */
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #f4f4f5;
+  background: #f8fafc;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #d4d4d8;
-  border-radius: 3px;
-  transition: all 0.3s;
+  background: #cbd5e1;
+  border-radius: 9999px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #a1a1aa;
+  background: #94a3b8;
 }
 
-/* Safety selector: turn general layout .text-white elements to dark charcoal */
-.text-white {
-  color: #09090b !important;
-}
-
-/* BUT if it is a button with text-white, or inside such button, or inside a dark background, keep it white! */
-button.text-white,
-button.text-white *,
-.text-white.bg-black,
-.text-white.bg-red-650,
-.bg-black,
-.bg-black *,
-.bg-red-650,
-.bg-red-650 *,
-.bg-indigo-600,
-.bg-indigo-600 *,
-.bg-purple-600,
-.bg-purple-600 *,
-.bg-rose-600,
-.bg-rose-600 *,
-.bg-emerald-600,
-.bg-emerald-600 * {
-  color: #ffffff !important;
-}
-
-/* --- LIGHT INTERFACE ANIMATIONS --- */
-
-@keyframes slide-up {
+/* Fast and smooth micro-animations */
+@keyframes fadeInScale {
   from {
     opacity: 0;
-    transform: translateY(16px);
+    transform: scale(0.97);
   }
   to {
     opacity: 1;
-    transform: translateY(0);
+    transform: scale(1);
   }
 }
 
-.animate-slide-up {
-  animation: slide-up 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+.animate-scale-up {
+  animation: fadeInScale 0.18s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
-@keyframes shake {
-  0%, 100% { transform: translateX(0); }
-  20%, 60% { transform: translateX(-4px); }
-  40%, 80% { transform: translateX(4px); }
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
-.animate-shake {
-  animation: shake 0.4s ease-in-out;
+.animate-fade-in {
+  animation: fadeIn 0.22s ease-out forwards;
 }
-
-@keyframes blink {
-  50% { opacity: 0; }
-}
-
-.terminal-cursor {
-  animation: blink 1s step-end infinite;
-}
-
-.kanban-card-delay-1 { animation-delay: 0.1s; }
-.kanban-card-delay-2 { animation-delay: 0.18s; }
-.kanban-card-delay-3 { animation-delay: 0.25s; }
-.kanban-card-delay-4 { animation-delay: 0.32s; }
-.kanban-card-delay-5 { animation-delay: 0.4s; }

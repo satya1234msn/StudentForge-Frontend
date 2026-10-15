@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import useProjectStore from '../store/projectStore';
 import useAuthStore from '../store/authStore';
 import { Search, Shield, Users, Calendar, Filter, Sparkles, X, Send } from 'lucide-react';
@@ -262,6 +263,14 @@ const Discover = () => {
                               Required level: <span className="text-indigo-400 uppercase font-medium">{r.levelRequired}</span> • Tech skills: {r.skillsRequired?.join(', ')}
                             </p>
                           </div>
+
+                          {!r.filled && !isOwnProject && !user && (
+                            <Link to="/login">
+                              <Button variant="primary" className="text-[10px] py-1.5 px-3 uppercase shrink-0">
+                                Sign In to Apply
+                              </Button>
+                            </Link>
+                          )}
 
                           {!r.filled && !isOwnProject && user && !isApplyingThis && (
                             <div className="flex flex-col items-end gap-1.5 shrink-0">
